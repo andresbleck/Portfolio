@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANDRES BLECKWEDEL - Desarrollador Frontend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .content-section {
+            min-height: 100vh;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #CBDF90;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        
+    </style>
+    </head>
+    <div class="md:hidden fixed top-4 left-4 z-50">
+    <button id="mobile-menu-button" class="bg-[#4D7C8A] text-white p-3 rounded-lg shadow-lg hover:bg-[#3a616d] transition duration-300">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+    </div>
+
+    <!-- Overlay para cerrar el menú -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+    <!-- Barra lateral -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[#4D7C8A] text-white p-6 flex flex-col z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="mb-10 flex flex-col items-center">
+            <img src="./images/cv (1).jpg" alt="Andres Bleckwedel" class="rounded-lg h-40 object-cover border-4 border-[#f8fafc] mb-4 hover:border-[#CBDF90]">
+            <h1 class="text-xl font-bold text-center">ANDRES BLECKWEDEL</h1>
+        </div>
+        
+        <nav class="flex-1">
+            <ul class="space-y-4">
+                <li><a href="#home" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-home mr-3"></i>Inicio</a></li>
+                <li><a href="#about" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-user mr-3"></i>Sobre Mí</a></li>
+                <li><a href="#portfolio" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-briefcase mr-3"></i>Portafolio</a></li>
+                <li><a href="#education" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-graduation-cap mr-3"></i>Educación</a></li>
+                <li><a href="#skills" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-code mr-3"></i>Skills</a></li>
+                <li><a href="#contact" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-envelope mr-3"></i>Contacto</a></li>
+            </ul>
+        </nav>
+            
+        
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 md:ml-64 overflow-y-auto">
+        <!-- Sección de Inicio -->
+        <section id="home" class="content-section flex items-center justify-center relative overflow-hidden">
+           
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Andres Bleckwedel</h1>
+                    <p class="text-lg text-gray-600 mb-6">Técnico en Desarrollo y Calidad de Software</p>
+                    <div class=" my-8 min-h-[60px] flex items-center justify-center">
+                      <p id="typewriter-text" class="text-gray-700 italic text-lg text-center border-b-2 border-[#18A079] "></p>
+                      <span id="typewriter-cursor" class="ml-1 animate-pulse ">|</span>
+                    </div>
+                    <p class="text-gray-600 mb-8">Bienvenidos a mi portfolio como desarrollador junior. Especializado mas en el area de frontend, con enfoque en crear experiencias de usuario excepcionales.</p>
+                    <a href="#portfolio" class="inline-block bg-[#18A079] hover:bg-[#148266] text-white font-medium py-3 px-8 rounded-lg transition duration-300">
+                        Ver mi trabajo
+                    </a>
+                </div>
+            
+
+            
+                <div class="inline-block mt-10  items-center">
+                    
+                    <div class="flex space-x-6 ">
+                        <a href="www.linkedin.com/in/andres-bleckwedel" class="text-gray-600 hover:text-[#18A079] transition duration-300">
+                            <i class="fab fa-linkedin text-3xl"></i>
+                        </a>
+                        <a href="https://github.com/andresbleck" class="text-gray-600 hover:text-[#18A079] transition duration-300">
+                            <i class="fab fa-github text-3xl"></i>
+                        </a>
+                        <a href="https://wa.link/d6e0rx" class="text-gray-600 hover:text-[#18A079] transition duration-300">
+                            <i class="fab fa-whatsapp text-3xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="w-full h-1 bg-gray-300"></div>
+
+        <!-- Sección Sobre Mí -->
+        <section id="about" class="content-section bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Sobre Mí</h2>
+                
+                <div class="grid grid-cols-1 max-w-3xl gap-8 items-center  text-center flex mx-auto">
+                    <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
+                        <p class="text-gray-700 mb-4">Soy un desarrollador frontend con formación técnica en Desarrollo y Calidad de Software. </p>
+                        <p class="text-gray-700 mb-4">Estoy iniciando mi carrera profesional y busco oportunidades que me permitan seguir creciendo, aprendiendo nuevas tecnologías y aportando mis conocimientos en proyectos reales.</p>
+                        <p class="text-gray-700">Me apasiona el desarrollo web y me esfuerzo por mantenerme actualizado en un entorno en constante evolución, combinando buenas prácticas, diseño funcional y una mentalidad orientada a la mejora continua.</p>
+                    </div>
+                    <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200 ">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Información Personal</h3>
+                        <ul class="space-y-3 text-gray-700 ">
+                            <li class=" items-start ">
+                                <i class="fas fa-map-marker-alt text-[#18A079] mt-1 mr-3 text-center"></i>
+                                <span>Ubicación: Tucuman, Argentina</span>
+                            </li>
+                            <li class=" items-start">
+                                <i class="fas fa-envelope text-[#18A079] mt-1 mr-3 "></i>
+                                <span>Email: andres.bleckwedel2@gmail.com</span>
+                            </li>
+                            <li class=" items-start">
+                                <i class="fas fa-phone text-[#18A079] mt-1 mr-3"></i>
+                                <span>Teléfono: +54 381-5699499</span>
+                            </li>
+                            <li class=" items-start">
+                                <i class="fas fa-language text-[#18A079] mt-1 mr-3"></i>
+                                <span>Idiomas: Español , Inglés [B2]</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="flex justify-center mt-8 mb-6">
+                <a href="./docs/CV_andresbleck.pdf" class="bg-[#18A079] hover:bg-[#148266] text-white text-center py-4 px-12 rounded-lg transition duration-300 inline-block font-bold">
+                    <i class="fas fa-download mr-2 mb-1" a></i>Descargar CV
+                </a>
+            </div>
+        </section>
+
+        <!-- Sección Portafolio -->
+        <section id="portfolio" class="content-section bg-[#f8fafc]">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Mi Portafolio</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Una selección de proyectos que demuestran mis habilidades y experiencia en desarrollo frontend.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+                <!-- Proyecto 1 - BookLoop -->
+                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
+                    <div class="h-48 overflow-hidden flex-shrink-0">
+                        <img src="./images/bookloop.png" alt="BookLoop - Compra y venta de libros usados" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">BookLoop</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">Es la tesis que hice con mi grupo, una pagina de compra y venta de libros usados. Junto con una compañera nos encargamos de todo el diseño e interaccion del usuario. Nos enfocamos en una interfaz amigable y facil de usar. Con tipografia y colores relacionados a las bibliotecas y libros.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">HTML</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">CSS</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">JavaScript</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Express</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Node</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Supabase</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Cypress</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Vercel</span>
+                        </div>
+                        <a href="https://www.bookloop.com.ar/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
+                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 2 - Guitarras -->
+                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
+                    <div class="h-48 overflow-hidden flex-shrink-0">
+                        <img src="./images/guitarra.png" alt="Guitarras" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Guitarras</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">En el curso desarrollé una pagina web de guitarras eléctricas utilizando React y TypeScript. Implementé componentes reutilizables, manejo de estado, eventos y hooks personalizados para una experiencia de usuario fluida. La pagina renderiza las guitarras desde una base de datos local.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">CSS</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
+                        </div>
+                        <a href="https://guitarrasshop.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
+                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 3 - Calculadora de Propinas -->
+                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
+                    <div class="h-48 overflow-hidden flex-shrink-0">
+                        <img src="./images/calculadora.png" alt="Calculadora de Propinas" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Calculadora de Propinas</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">Desarrolle una pagina ideal para restaurantes donde se podrá generar una orden con consumos y la persona podrá elegir la propina que desea dejar. En este proyecto aprendi un poco mas de performance de React, utilicé Generics para inferir en los tipos de datos.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Tailwind CSS</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
+                        </div>
+                        <a href="https://ordesnesypropinas.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
+                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 4 - Calculadora de Calorias -->
+                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
+                    <div class="h-48 overflow-hidden flex-shrink-0">
+                        <img src="./images/contador.png" alt="Contador de Calorias" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Contador de calorias</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">La aplicación es un contador de calorías que permite al usuario registrar actividades y llevar un control de las calorías consumidas o quemadas. Implementé useReducer para manejar el estado global de la aplicación, lo que permitió una gestión más ordenada y escalable que el uso de varios useState independientes.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Tailwind CSS</span>
+                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
+                        </div>
+                        <a href="https://conttadorcalorias.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
+                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Sección Educación -->
+        <section id="education" class="content-section bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Educación</h2>
+                
+                <div class="max-w-3xl mx-auto">
+                    <!-- Educación 1 -->
+                    <div class="relative pl-8 pb-8 border-l-2 border-[#18A079]">
+                        <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-[#18A079]"></div>
+                        <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Técnico en Desarrollo y Calidad de Software</h3>
+                            <p class="text-[#18A079] font-medium mb-2">Universidad Santo Tomas de Aquino</p>
+                            <p class="text-gray-600 mb-3">2023 - 2025</p>
+                            <p class="text-gray-700">Formación técnica especializada en desarrollo de software tanto backend como frontend, pruebas de calidad, arquitecturas de software, metodologías ágiles y buenas prácticas de programación.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Educación 2 -->
+                    <div class="relative pl-8 pb-2 border-l-2 border-[#18A079]">
+                        <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-[#18A079]"></div>
+                        <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Curso de React y Typescript</h3>
+                            <p class="text-[#18A079] font-medium mb-2">Udemy</p>
+                            <p class="text-gray-600 mb-3">Agosto 2025 - Noviembre 2025</p>
+                            <p class="text-gray-700">Especialización en tecnologías modernas de frontend como React, Next.js, Typescript, interaccion con APIs, proyectos con MERN Y PERN.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Educación 3 --
+                    <div class="relative pl-8 border-l-2 border-[#18A079]">
+                        <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-[#18A079]"></div>
+                        <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Certificación en Diseño UX/UI</h3>
+                            <p class="text-[#18A079] font-medium mb-2">[Nombre de la plataforma/institución]</p>
+                            <p class="text-gray-600 mb-3">[Fecha de inicio] - [Fecha de finalización]</p>
+                            <p class="text-gray-700">Formación en principios de diseño centrado en el usuario, investigación de usuarios, prototipado y testing de interfaces.</p>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Skills -->
+        <section id="skills" class="content-section bg-[#f8fafc] pb-2">
+            <div class="container mx-auto ">
+                <h2 class="text-3xl font-bold text-gray-800 mb-15 mt-12 text-center ">Habilidades Técnicas</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10">
+                    <!-- Columna 1 -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6 mt-14">Frontend</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">HTML5</span>
+                                    <span class="text-gray-700">40%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#18A079]" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">CSS3 / Tailwind</span>
+                                    <span class="text-gray-700">35%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#18A079]" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">JavaScript</span>
+                                    <span class="text-gray-700">50%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#18A079]" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">React</span>
+                                    <span class="text-gray-700">45%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#18A079]" style="width: 45%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Typescript</span>
+                                    <span class="text-gray-700">35%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#18A079]" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Columna 2 -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6 mt-14">Herramientas & Otros</h3>
+                        <div class="space-y-4">
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Node / Express</span>
+                                    <span class="text-gray-700">35%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Git / GitHub</span>
+                                    <span class="text-gray-700">25%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 25%"></div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Cypress / Katalon Studio</span>
+                                    <span class="text-gray-700">30%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Metodologías Ágiles</span>
+                                    <span class="text-gray-700">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 80%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700">Jira / Kanban</span>
+                                    <span class="text-gray-700">60%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contact" class="content-section bg-whitepy-8">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Contacto</h2>
+                
+                <div class="max-w-2xl mx-auto bg-[#f8fafc] p-8 rounded-lg border border-gray-200">
+                    <p class="text-gray-700 text-center mb-6">¿Tienes un proyecto en mente? ¡Me encantaría saber de ti! Puedes contactarme a través del formulario o directamente a mi correo electrónico.</p>
+                    
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2">Nombre</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="Tu nombre">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="tu@email.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-700 mb-2">Asunto</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="Asunto del mensaje">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2">Mensaje</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="Escribe tu mensaje aquí..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-[#18A079] hover:bg-[#148266] text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <div class="flex flex-col md:flex-row justify-between items-center">
+                            <div class="mb-4 md:mb-0">
+                                <p class="text-gray-700"><i class="fas fa-envelope text-[#18A079] mr-2"></i>andres.bleckwedel2@gmail.com</p>
+                            </div>
+                            <div class="flex space-x-4">
+                                <a href="www.linkedin.com/in/andres-bleckwedel" class="text-gray-600 hover:text-[#18A079] transition duration-300">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="https://github.com/andresbleck" class="text-gray-600 hover:text-[#18A079] transition duration-300">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <a href="https://wa.link/d6e0rx" class="text-gray-600 hover:text-[#18A079] transition duration-300">
+                                    <i class="fab fa-whatsapp text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="bg-[#4D7C8A] text-white py-6 text-center">
+            <p>&copy; 2025 ANDRES BLECKWEDEL. Todos los derechos reservados.</p>
+        </footer>
+    </main>
+
+    <script>
+        // Animación para las barras de habilidades
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 300);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+            
+            // Navegación suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        
+    </script>
+<script>
+// Efecto de escritura para el párrafo
+document.addEventListener('DOMContentLoaded', () => {
+    const textElement = document.getElementById('typewriter-text');
+    const cursorElement = document.getElementById('typewriter-cursor');
+    
+    if (textElement && cursorElement) {
+        const text = '"Empezando mi camino como desarrollador de software"';
+        let index = 0;
+        
+        function typeWriter() {
+            if (index < text.length) {
+                textElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            } else {
+                // Una vez terminado, el cursor deja de parpadear
+                cursorElement.classList.remove('animate-pulse');
+                cursorElement.style.opacity = '0';
+            }
+        }
+        
+        // Iniciar el efecto después de un pequeño delay
+        setTimeout(typeWriter, 500);
+    }
+});
+</script>
+<button id="back-to-top" class="fixed bottom-8 right-8 bg-[#18A079] hover:bg-[#148266] text-white p-3 rounded-full shadow-lg transition duration-300 opacity-0 invisible">
+    <i class="fas fa-arrow-up"></i>
+</button>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    // Mostrar u ocultar el botón basado en el scroll
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.remove('opacity-0', 'invisible');
+            backToTopButton.classList.add('opacity-100', 'visible');
+        } else {
+            backToTopButton.classList.remove('opacity-100', 'visible');
+            backToTopButton.classList.add('opacity-0', 'invisible');
+        }
+    });
+    
+    // Scroll suave al hacer clic
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Funcionalidad del menú hamburguesa
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    // Abrir/cerrar menú
+    mobileMenuButton.addEventListener('click', function() {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    });
+    
+    // Cerrar menú al hacer clic en el overlay
+    overlay.addEventListener('click', function() {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    });
+    
+    // Cerrar menú al hacer clic en un enlace (en móviles)
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        });
+    });
+    
+    // Cerrar menú al redimensionar la ventana a desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+        }
+    });
+});
+</script>
+</body>
+</html>
