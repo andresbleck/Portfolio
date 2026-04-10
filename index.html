@@ -1,725 +1,482 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDRES BLECKWEDEL - Desarrollador Frontend</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .sidebar {
-            transition: all 0.3s ease;
-        }
-        
-        .content-section {
-            min-height: 100vh;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-        
-        .skill-bar {
-            height: 8px;
-            border-radius: 4px;
-            background-color: #e5e7eb;
-            overflow: hidden;
-        }
-        
-        .skill-progress {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 1s ease-in-out;
-        }
-        
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .nav-link {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: #CBDF90;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Andres Bleckwedel | Frontend Developer — Portfolio</title>
 
-        
-    </style>
-    </head>
-    <div class="md:hidden fixed top-4 left-4 z-50">
-    <button id="mobile-menu-button" class="bg-[#4D7C8A] text-white p-3 rounded-lg shadow-lg hover:bg-[#3a616d] transition duration-300">
-        <i class="fas fa-bars text-xl"></i>
-    </button>
+  <!-- Tailwind + Fonts + FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    * {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 10% 20%, #030014, #010105, #000000);
+      background-attachment: fixed;
+    }
+    
+    /* Glass morphism & dark professional cards */
+    .glass-panel {
+      background: rgba(10, 14, 23, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(48, 62, 77, 0.35);
+      border-radius: 2rem;
+    }
+    
+    .card-pro {
+      background: rgba(8, 12, 24, 0.85);
+      backdrop-filter: blur(4px);
+      border-radius: 1.75rem;
+      transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+      border: 1px solid rgba(66, 84, 102, 0.25);
+      box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.6);
+    }
+    
+    .card-pro:hover {
+      transform: translateY(-6px);
+      border-color: rgba(24, 160, 121, 0.45);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(24, 160, 121, 0.2);
+      background: rgba(12, 18, 30, 0.92);
+    }
+    
+    /* Gradient text & highlights */
+    .gradient-accent {
+      background: linear-gradient(120deg, #18A079, #2dd4bf);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(105deg, #18A079 0%, #0f8b6a 100%);
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 14px rgba(24, 160, 121, 0.25);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px -8px rgba(24, 160, 121, 0.45);
+      background: linear-gradient(105deg, #1eb78c, #18A079);
+    }
+    
+    /* Menu dropdown animation */
+    .mobile-menu {
+      transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      transform-origin: top;
+      opacity: 0;
+      transform: scaleY(0);
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .mobile-menu.open {
+      opacity: 1;
+      transform: scaleY(1);
+      visibility: visible;
+      pointer-events: auto;
+    }
+    
+    /* Tech badges */
+    .tech-badge {
+      background: rgba(24, 160, 121, 0.12);
+      border: 1px solid rgba(24, 160, 121, 0.3);
+      backdrop-filter: blur(2px);
+      transition: all 0.2s;
+      text-align: center;
+    }
+    
+    .tech-badge:hover {
+      background: rgba(24, 160, 121, 0.25);
+      border-color: #18A079;
+      transform: translateY(-2px);
+    }
+    
+    /* Project tech chips */
+    .project-tech {
+      background: rgba(24, 160, 121, 0.15);
+      border: 1px solid rgba(24, 160, 121, 0.25);
+      color: #18A079;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      transition: all 0.2s;
+    }
+    
+    .project-tech:hover {
+      background: rgba(24, 160, 121, 0.3);
+      border-color: #18A079;
+    }
+    
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #18A079;
+      border-radius: 10px;
+    }
+    
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #F1F5F9 30%, #CBD5E1 80%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* Education timeline */
+    .edu-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(24, 160, 121, 0.25);
+      transition: all 0.2s;
+    }
+    .edu-card:hover {
+      border-color: #18A079;
+      background: rgba(20, 30, 55, 0.8);
+      transform: translateX(4px);
+    }
+    .edu-dot {
+      background-color: #18A079;
+      box-shadow: 0 0 0 3px rgba(24, 160, 121, 0.3);
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #18A079;
+      color: white;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      opacity: 0;
+      visibility: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 40;
+    }
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scroll-top:hover {
+      background: #0f8b6a;
+      transform: translateY(-4px);
+    }
+  </style>
+</head>
+<body class="text-white antialiased">
+
+  <!-- Scroll to top button -->
+  <div id="scrollTopBtn" class="scroll-top">
+    <i class="fas fa-arrow-up text-xl"></i>
+  </div>
+
+  <!-- ========== FIXED HEADER WITH HAMBURGER MENU ========== -->
+  <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 backdrop-blur-xl bg-black/40 border-b border-white/5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#" class="text-xl md:text-2xl font-bold tracking-tight hover:text-[#18A079] transition duration-300">
+        <span class="gradient-accent">Andres</span> <span class="text-white">Bleckwedel</span>
+      </a>
+      <button id="menuToggle" class="relative z-50 flex flex-col items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#18A079]/50 transition-all focus:outline-none">
+        <span class="block text-2xl leading-5">☰</span>
+      </button>
     </div>
+    
+    <div id="mobileNav" class="mobile-menu fixed top-[72px] left-4 right-4 md:left-auto md:right-6 md:w-80 rounded-2xl glass-panel shadow-2xl border border-white/10 p-5 z-40">
+      <nav class="flex flex-col gap-3">
+        <a href="#" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Home</a>
+        <a href="#about" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">About</a>
+        <a href="#tech" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Tech Stack</a>
+        <a href="#education" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Education</a>
+        <a href="#projects" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Projects</a>
+        <a href="#contact" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Contact</a>
+      </nav>
+      <div class="mt-5 pt-3 border-t border-white/10 text-xs text-gray-400 text-center">Let's build something great</div>
+    </div>
+  </header>
 
-    <!-- Overlay para cerrar el menú -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
-
-    <!-- Barra lateral -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-[#4D7C8A] text-white p-6 flex flex-col z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
-        <div class="mb-10 flex flex-col items-center">
-            <img src="./images/cv (1).jpg" alt="Andres Bleckwedel" class="rounded-lg h-40 object-cover border-4 border-[#f8fafc] mb-4 hover:border-[#CBDF90]">
-            <h1 class="text-xl font-bold text-center">ANDRES BLECKWEDEL</h1>
+  <main class="pt-20">
+    
+    <!-- HERO SECTION (con íconos de redes sociales) -->
+    <section class="min-h-[90vh] flex items-center justify-center text-center px-6 relative overflow-hidden">
+      <div class="max-w-4xl relative z-10">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-[#18A079]/10 border border-[#18A079]/30 text-sm font-medium tracking-wide backdrop-blur-sm">✦ Portfolio 2026 ✦</div>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Andres <span class="gradient-accent">Bleckwedel</span></h1>
+        <p class="text-2xl md:text-3xl font-semibold text-[#18A079] mb-6">Frontend Developer</p>
+        <p class="text-soft text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-gray-300">I craft modern, high-performance web applications with a focus on exceptional UX, clean architecture, and scalable frontend solutions.</p>
+        
+        <!-- Botones CTA -->
+        <div class="flex flex-wrap justify-center gap-5 mt-10">
+          <a href="#projects" class="btn-primary px-8 py-3.5 rounded-xl font-semibold transition shadow-lg">Explore Projects →</a>
+          <a href="#contact" class="border border-gray-500/60 px-8 py-3.5 rounded-xl font-semibold hover:border-[#18A079] hover:bg-white/5 transition backdrop-blur-sm">Let's Connect</a>
         </div>
-        
-        <nav class="flex-1">
-            <ul class="space-y-4">
-                <li><a href="#home" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-home mr-3"></i>Inicio</a></li>
-                <li><a href="#about" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-user mr-3"></i>Sobre Mí</a></li>
-                <li><a href="#portfolio" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-briefcase mr-3"></i>Portafolio</a></li>
-                <li><a href="#education" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-graduation-cap mr-3"></i>Educación</a></li>
-                <li><a href="#skills" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-code mr-3"></i>Skills</a></li>
-                <li><a href="#contact" class="nav-link block py-2 text-white hover:text-[#CBDF90] mobile-nav-link"><i class="fas fa-envelope mr-3"></i>Contacto</a></li>
-            </ul>
-        </nav>
-            
-        
-    </aside>
 
-    <!-- Contenido principal -->
-    <main class="flex-1 md:ml-64 overflow-y-auto">
-        <!-- Sección de Inicio -->
-        <section id="home" class="content-section flex items-center justify-center relative overflow-hidden">
-           
-            <div class="container mx-auto px-6 text-center">
-                <div class="max-w-2xl mx-auto">
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Andres Bleckwedel</h1>
-                    <p class="text-lg text-gray-600 mb-6">Técnico en Desarrollo y Calidad de Software</p>
-                    <div class=" my-8 min-h-[60px] flex items-center justify-center">
-                      <p id="typewriter-text" class="text-gray-700 italic text-lg text-center border-b-2 border-[#18A079] "></p>
-                      <span id="typewriter-cursor" class="ml-1 animate-pulse ">|</span>
-                    </div>
-                    <p class="text-gray-600 mb-8">Bienvenidos a mi portfolio como desarrollador junior. Especializado mas en el area de frontend, con enfoque en crear experiencias de usuario excepcionales.</p>
-                    <a href="#portfolio" class="inline-block bg-[#18A079] hover:bg-[#148266] text-white font-medium py-3 px-8 rounded-lg transition duration-300">
-                        Ver mi trabajo
-                    </a>
-                </div>
-            
+        <!-- Redes Sociales (íconos funcionando) -->
+        <div class="mt-12 flex justify-center">
+          <div class="flex space-x-6">
+            <a href="https://www.linkedin.com/in/andres-bleckwedel" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
+              <i class="fab fa-linkedin text-3xl"></i>
+            </a>
+            <a href="https://github.com/andresbleck?tab=repositories" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
+              <i class="fab fa-github text-3xl"></i>
+            </a>
+            <a href="https://wa.link/d6e0rx" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
+              <i class="fab fa-whatsapp text-3xl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="absolute w-96 h-96 bg-[#18A079]/20 rounded-full blur-[100px] -top-20 -right-20 opacity-30 pointer-events-none"></div>
+    </section>
 
-            
-                <div class="inline-block mt-10  items-center">
-                    
-                    <div class="flex space-x-6 ">
-                        <a href="https://www.linkedin.com/in/andres-bleckwedel" class="text-gray-600 hover:text-[#18A079] transition duration-300">
-                            <i class="fab fa-linkedin text-3xl"></i>
-                        </a>
-                        <a href="https://github.com/andresbleck?tab=repositories" class="text-gray-600 hover:text-[#18A079] transition duration-300">
-                            <i class="fab fa-github text-3xl"></i>
-                        </a>
-                        <a href="https://wa.link/d6e0rx" class="text-gray-600 hover:text-[#18A079] transition duration-300">
-                            <i class="fab fa-whatsapp text-3xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 px-6 text-center scroll-mt-24">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="section-title mb-8">About Me</h2>
+        <div class="glass-panel p-8 md:p-10 rounded-3xl">
+          <p class="text-gray-200 text-lg leading-relaxed">I'm a Frontend Developer with a robust background in Software Development and Quality Assurance. I specialize in building modern, high-performance web applications using <strong class="text-[#18A079]">React</strong> and <strong class="text-[#18A079]">TypeScript</strong>, with an obsession for clean code, scalability, and intuitive user experiences. My QA mindset ensures pixel-perfect, bug-free interfaces that users love.</p>
+        </div>
+      </div>
+    </section>
 
-        <div class="w-full h-1 bg-gray-300"></div>
-
-        <!-- Sección Sobre Mí -->
-        <section id="about" class="content-section bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Sobre Mí</h2>
-                
-                <div class="grid grid-cols-1 max-w-3xl gap-8 items-center  text-center flex mx-auto">
-                    <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
-                        <p class="text-gray-700 mb-4">Soy un desarrollador frontend con formación técnica en Desarrollo y Calidad de Software. </p>
-                        <p class="text-gray-700 mb-4">Estoy iniciando mi carrera profesional y busco oportunidades que me permitan seguir creciendo, aprendiendo nuevas tecnologías y aportando mis conocimientos en proyectos reales.</p>
-                        <p class="text-gray-700">Me apasiona el desarrollo web y me esfuerzo por mantenerme actualizado en un entorno en constante evolución, combinando buenas prácticas, diseño funcional y una mentalidad orientada a la mejora continua.</p>
-                    </div>
-                    <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200 ">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Información Personal</h3>
-                        <ul class="space-y-3 text-gray-700 ">
-                            <li class=" items-start ">
-                                <i class="fas fa-map-marker-alt text-[#18A079] mt-1 mr-3 text-center"></i>
-                                <span>Ubicación: Tucuman, Argentina</span>
-                            </li>
-                            <li class=" items-start">
-                                <i class="fas fa-envelope text-[#18A079] mt-1 mr-3 "></i>
-                                <span>Email: andres.bleckwedel2@gmail.com</span>
-                            </li>
-                            <li class=" items-start">
-                                <i class="fas fa-phone text-[#18A079] mt-1 mr-3"></i>
-                                <span>Teléfono: +54 381-5699499</span>
-                            </li>
-                            <li class=" items-start">
-                                <i class="fas fa-language text-[#18A079] mt-1 mr-3"></i>
-                                <span>Idiomas: Español , Inglés [B2]</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                </div>
-                
-            </div>
-            <div class="flex justify-center mt-8 mb-6">
-                <a href="./docs/CV_andresbleck.pdf" class="bg-[#18A079] hover:bg-[#148266] text-white text-center py-4 px-12 rounded-lg transition duration-300 inline-block font-bold">
-                    <i class="fas fa-download mr-2 mb-1" a></i>Descargar CV
-                </a>
-            </div>
-        </section>
-
-        <!-- Sección Portafolio -->
-        <section id="portfolio" class="content-section bg-[#f8fafc]">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Mi Portafolio</h2>
-            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Una selección de proyectos que demuestran mis habilidades y experiencia en desarrollo frontend.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-                <!-- Proyecto 1 - BookLoop -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/bookloop.png" alt="BookLoop - Compra y venta de libros usados" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">BookLoop</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Es la tesis que hice con mi grupo, una pagina de compra y venta de libros usados. Junto con una compañera nos encargamos de todo el diseño e interaccion del usuario. Nos enfocamos en una interfaz amigable y facil de usar. Con tipografia y colores relacionados a las bibliotecas y libros.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">HTML</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">CSS</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">JavaScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Express</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Node</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Supabase</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Cypress</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Vercel</span>
-                        </div>
-                        <a href="https://www.bookloop.com.ar/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Proyecto 2 - Guitarras -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/guitarra.png" alt="Guitarras" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Guitarras</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">En el curso desarrollé una pagina web de guitarras eléctricas utilizando React y TypeScript. Implementé componentes reutilizables, manejo de estado, eventos y hooks personalizados para una experiencia de usuario fluida. La pagina renderiza las guitarras desde una base de datos local.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">CSS</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
-                        </div>
-                        <a href="https://guitarrasshop.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Proyecto 3 - Calculadora de Propinas -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/calculadora.png" alt="Calculadora de Propinas" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Calculadora de Propinas</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Desarrolle una pagina ideal para restaurantes donde se podrá generar una orden con consumos y la persona podrá elegir la propina que desea dejar. En este proyecto aprendi un poco mas de performance de React, utilicé Generics para inferir en los tipos de datos.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Tailwind CSS</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
-                        </div>
-                        <a href="https://ordesnesypropinas.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 4 - Calculadora de Calorias -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/contador.png" alt="Contador de Calorias" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Contador de calorias</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">La aplicación es un contador de calorías que permite al usuario registrar actividades y llevar un control de las calorías consumidas o quemadas. Implementé useReducer para manejar el estado global de la aplicación, lo que permitió una gestión más ordenada y escalable que el uso de varios useState independientes.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Tailwind CSS</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
-                        </div>
-                        <a href="https://conttadorcalorias.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 5 - Control Gastos -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/gastos.png" alt="Control Gastos" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Control de Gastos</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Desarrollé una aplicación de control de gastos en React donde implementé ContextAPI para gestionar el estado global del presupuesto y los movimientos. Integré librerías como react-swipeable-list, que permite editar o eliminar gastos deslizando cada tarjeta, y react-circular-progressbar, utilizada para visualizar de forma dinámica el progreso del presupuesto.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Tailwind CSS</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Context API</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
-                        </div>
-                        <a href="https://controlgastos-contextapi1.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 6 - Veterinario Zustand -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/pacientes.png" alt="Pacientes" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Seguimiento Pacientes</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Desarrollé una aplicación de seguimiento de pacientes veterinarios utilizando Zustand para la gestión global del estado. Implementé React Hook Form para un manejo óptimo y validado de los formularios, y utilicé Redux DevTools para inspeccionar el estado en tiempo real durante el desarrollo. Además, integré React Toastify para mostrar alertas claras y dinamicas.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Tailwind CSS</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Zustand</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Redux Dev Tools</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React Hook Form</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Netlify</span>
-                        </div>
-                        <a href="https://pacientes-zustandd.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 7 - Clima API -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/clima.png" alt="Pacientes" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Clima con API</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Aplicación web desarrollada en TypeScript que consume una API externa para obtener información del clima en tiempo real. Implementa validación de datos con Zod, manejo de estados y estilos mediante CSS Modules</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">CSS Modules</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Zod</span>
-                        </div>
-                        <a href="https://clima-ts-api-zod.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 8 - Cotizador crypto-->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden flex-shrink-0">
-                        <img src="./images/cripto.png" alt="Pacientes" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Cotizador Cryptos</h3>
-                        <p class="text-gray-600 mb-4 flex-grow">Aplicación de cotización de criptomonedas desarrollada en TypeScript, que consume una API REST para mostrar precios en tiempo real. Utiliza Zod para la validación segura de datos y Zustand para la gestión eficiente del estado global</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">TypeScript</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">React</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Zustand</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">CSS Modules</span>
-                            <span class="bg-[#eef7f4] text-[#18A079] text-xs font-medium px-2.5 py-0.5 rounded">Zod</span>
-                        </div>
-                        <a href="https://criptos-zod.netlify.app/" class="nav-link mt-4 text-[#18A079] font-medium hover:text-[#148266] transition duration-300 flex items-center justify-center ">
-                            Ver proyecto <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <!-- TECH STACK SECTION -->
+    <section id="tech" class="py-24 px-6 text-center scroll-mt-24 bg-black/20 backdrop-blur-sm">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="section-title mb-12">Tech Stack & Tools</h2>
+        <!-- Grid: 2 columnas en móvil, 3 en tablet, 4 en desktop -> aspecto vertical/alargado -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">React 18</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">TypeScript</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">JavaScript (ES2022+)</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">HTML</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Tailwind CSS</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Node.js / Express</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Git & GitHub</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Context API / Redux</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">RESTful APIs</span>
+          <!-- Agregamos algunos badges extra para dar más altura y variedad (opcional pero profesional) -->
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Zustand</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Jira</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Scrum</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Postman</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Cursor</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Cypress</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Mocha&Chai</span>
         </div>
     </section>
 
-        <!-- Sección Educación -->
-        <section id="education" class="content-section bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Educación</h2>
-                
-                <div class="max-w-3xl mx-auto">
-                    <!-- Educación 1 -->
-                    <div class="relative pl-8 pb-8 border-l-2 border-[#18A079]">
-                        <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-[#18A079]"></div>
-                        <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Técnico en Desarrollo y Calidad de Software</h3>
-                            <p class="text-[#18A079] font-medium mb-2">Universidad Santo Tomas de Aquino</p>
-                            <p class="text-gray-600 mb-3">2023 - 2025</p>
-                            <p class="text-gray-700">Formación técnica especializada en desarrollo de software tanto backend como frontend, pruebas de calidad, arquitecturas de software, metodologías ágiles y buenas prácticas de programación.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Educación 2 -->
-                    <div class="relative pl-8 pb-2 border-l-2 border-[#18A079]">
-                        <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-[#18A079]"></div>
-                        <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Curso de React y Typescript</h3>
-                            <p class="text-[#18A079] font-medium mb-2">Udemy</p>
-                            <p class="text-gray-600 mb-3">Agosto 2025 - Noviembre 2025</p>
-                            <p class="text-gray-700">Especialización en tecnologías modernas de frontend como React, Next.js, Typescript, interaccion con APIs, proyectos con MERN Y PERN.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Educación 3 --
-                    <div class="relative pl-8 border-l-2 border-[#18A079]">
-                        <div class="absolute -left-2 top-0 w-4 h-4 rounded-full bg-[#18A079]"></div>
-                        <div class="bg-[#f8fafc] p-6 rounded-lg border border-gray-200">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Certificación en Diseño UX/UI</h3>
-                            <p class="text-[#18A079] font-medium mb-2">[Nombre de la plataforma/institución]</p>
-                            <p class="text-gray-600 mb-3">[Fecha de inicio] - [Fecha de finalización]</p>
-                            <p class="text-gray-700">Formación en principios de diseño centrado en el usuario, investigación de usuarios, prototipado y testing de interfaces.</p>
-                        </div>
-                    </div>-->
-                </div>
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="py-24 px-6 scroll-mt-24">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="section-title text-center mb-12">Education</h2>
+        <div class="relative">
+          <div class="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-[#18A079]/40 hidden sm:block"></div>
+          <div class="relative pl-6 sm:pl-16 pb-12">
+            <div class="absolute left-0 top-1 w-3 h-3 rounded-full edu-dot hidden sm:block"></div>
+            <div class="edu-card rounded-2xl p-6 shadow-lg">
+              <h3 class="text-xl font-bold text-white mb-1">Software Development & Quality Technician</h3>
+              <p class="text-[#18A079] font-medium mb-2">Universidad Santo Tomas de Aquino</p>
+              <p class="text-gray-400 text-sm mb-3">2023 - 2025</p>
+              <p class="text-gray-300 leading-relaxed">Specialized technical training in backend and frontend development, quality assurance, software architecture, agile methodologies, and programming best practices.</p>
             </div>
-        </section>
-
-        <!-- Sección Skills -->
-        <section id="skills" class="content-section bg-[#f8fafc] pb-2">
-            <div class="container mx-auto ">
-                <h2 class="text-3xl font-bold text-gray-800 mb-15 mt-12 text-center ">Habilidades Técnicas</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10">
-                    <!-- Columna 1 -->
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6 mt-14">Frontend</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">HTML5</span>
-                                    <span class="text-gray-700">40%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#18A079]" style="width: 40%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">CSS3 / Tailwind</span>
-                                    <span class="text-gray-700">35%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#18A079]" style="width: 35%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">JavaScript</span>
-                                    <span class="text-gray-700">50%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#18A079]" style="width: 50%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">React</span>
-                                    <span class="text-gray-700">45%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#18A079]" style="width: 45%"></div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">Typescript</span>
-                                    <span class="text-gray-700">35%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#18A079]" style="width: 35%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Columna 2 -->
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6 mt-14">Herramientas & Otros</h3>
-                        <div class="space-y-4">
-
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">Node / Express</span>
-                                    <span class="text-gray-700">35%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 35%"></div>
-                                </div>
-                            </div>
-                        
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">Git / GitHub</span>
-                                    <span class="text-gray-700">25%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 25%"></div>
-                                </div>
-                            </div>
-                            
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">Cypress / Katalon Studio</span>
-                                    <span class="text-gray-700">30%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 30%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">Metodologías Ágiles</span>
-                                    <span class="text-gray-700">80%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 80%"></div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span class="text-gray-700">Jira / Kanban</span>
-                                    <span class="text-gray-700">60%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress bg-[#4D7C8A]" style="width: 60%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="relative pl-6 sm:pl-16 pb-6">
+            <div class="absolute left-0 top-1 w-3 h-3 rounded-full edu-dot hidden sm:block"></div>
+            <div class="edu-card rounded-2xl p-6 shadow-lg">
+              <h3 class="text-xl font-bold text-white mb-1">React & TypeScript Mastery</h3>
+              <p class="text-[#18A079] font-medium mb-2">Udemy</p>
+              <p class="text-gray-400 text-sm mb-3">Aug 2025 - Nov 2025</p>
+              <p class="text-gray-300 leading-relaxed">In-depth specialization in modern frontend technologies: React, Next.js, TypeScript, API integration, MERN and PERN stack projects.</p>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Sección Contacto -->
-        <section id="contact" class="content-section bg-whitepy-8">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Contacto</h2>
-                
-                <div class="max-w-2xl mx-auto bg-[#f8fafc] p-8 rounded-lg border border-gray-200">
-                    <p class="text-gray-700 text-center mb-6">¿Tienes un proyecto en mente? ¡Me encantaría saber de ti! Puedes contactarme a través del formulario o directamente a mi correo electrónico.</p>
-                    
-                    <form class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="name" class="block text-gray-700 mb-2">Nombre</label>
-                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="Tu nombre">
-                            </div>
-                            <div>
-                                <label for="email" class="block text-gray-700 mb-2">Email</label>
-                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="tu@email.com">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="subject" class="block text-gray-700 mb-2">Asunto</label>
-                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="Asunto del mensaje">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-gray-700 mb-2">Mensaje</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#18A079] focus:border-transparent" placeholder="Escribe tu mensaje aquí..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-[#18A079] hover:bg-[#148266] text-white font-medium py-3 px-6 rounded-lg transition duration-300">
-                            Enviar Mensaje
-                        </button>
-                    </form>
-                    
-                    <div class="mt-8 pt-6 border-t border-gray-200">
-                        <div class="flex flex-col md:flex-row justify-between items-center">
-                            <div class="mb-4 md:mb-0">
-                                <p class="text-gray-700"><i class="fas fa-envelope text-[#18A079] mr-2"></i>andres.bleckwedel2@gmail.com</p>
-                            </div>
-                            <div class="flex space-x-4">
-                                <a href="https://www.linkedin.com/in/andres-bleckwedel" class="text-gray-600 hover:text-[#18A079] transition duration-300">
-                                    <i class="fab fa-linkedin text-xl"></i>
-                                </a>
-                                <a href="https://github.com/andresbleck?tab=repositories" class="text-gray-600 hover:text-[#18A079] transition duration-300">
-                                    <i class="fab fa-github text-xl"></i>
-                                </a>
-                                <a href="https://wa.link/d6e0rx" class="text-gray-600 hover:text-[#18A079] transition duration-300">
-                                    <i class="fab fa-whatsapp text-xl"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- PROJECTS SECTION — 9 proyectos en inglés -->
+    <section id="projects" class="py-24 px-6 scroll-mt-24 bg-black/20">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="section-title text-center mb-14">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- 1. BookLoop -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/bookloop.png" alt="BookLoop" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">BookLoop</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Final thesis project: a marketplace for buying and selling used books. I led the UI/UX design and interactions, creating a friendly, library‑inspired interface with smooth navigation.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">HTML</span><span class="project-tech">CSS</span><span class="project-tech">JavaScript</span><span class="project-tech">React</span><span class="project-tech">Express</span><span class="project-tech">Node</span><span class="project-tech">Supabase</span><span class="project-tech">Cypress</span><span class="project-tech">Vercel</span></div>
+              <a href="https://www.bookloop.com.ar/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
             </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="bg-[#4D7C8A] text-white py-6 text-center">
-            <p>&copy; 2025 ANDRES BLECKWEDEL. Todos los derechos reservados.</p>
-        </footer>
-    </main>
+          </div>
+          
+          <!-- 2. Guitar Shop -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/guitarra.png" alt="Guitar Shop" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Guitar Shop</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Electric guitar e‑commerce prototype built with React and TypeScript. Reusable components, custom hooks, and local database integration for a fluid user experience.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">CSS</span><span class="project-tech">React</span><span class="project-tech">TypeScript</span><span class="project-tech">Netlify</span></div>
+              <a href="https://guitarrasshop.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 3. Tip Calculator -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/calculadora.png" alt="Tip Calculator" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Tip Calculator</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Restaurant‑friendly app to generate orders and calculate tips. Used TypeScript generics for type inference and improved React performance.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Netlify</span></div>
+              <a href="https://ordesnesypropinas.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 4. Calorie Tracker -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/contador.png" alt="Calorie Tracker" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Calorie Tracker</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Track calories consumed and burned. Implemented `useReducer` for scalable global state management instead of multiple `useState` calls.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Netlify</span></div>
+              <a href="https://conttadorcalorias.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 5. Expense Control -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/gastos.png" alt="Expense Control" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Expense Control</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Budget manager with Context API, swipeable list for deleting/editing expenses, and a circular progress bar to visualize spending.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Context API</span><span class="project-tech">Netlify</span></div>
+              <a href="https://controlgastos-contextapi1.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 6. Patient Tracker -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/pacientes.png" alt="Patient Tracker" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Patient Tracker</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Veterinary clinic management app using Zustand for state, React Hook Form for validation, Redux DevTools, and Toastify for dynamic alerts.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Zustand</span><span class="project-tech">React Hook Form</span><span class="project-tech">Netlify</span></div>
+              <a href="https://pacientes-zustandd.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 7. Weather App -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/clima.png" alt="Weather App" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Weather App</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Real‑time weather data from external API. Built with TypeScript, Zod for validation, and CSS Modules for scoped styling.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">CSS Modules</span><span class="project-tech">Zod</span></div>
+              <a href="https://clima-ts-api-zod.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 8. Crypto Tracker -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/cripto.png" alt="Crypto Tracker" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Crypto Tracker</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Cryptocurrency price tracker using a REST API. TypeScript, Zod for safe data parsing, Zustand for state, and CSS Modules.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">CSS Modules</span><span class="project-tech">Zod</span></div>
+              <a href="https://criptos-zod.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+          
+          <!-- 9. Drink Explorer -->
+          <div class="card-pro overflow-hidden flex flex-col h-full">
+            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/tragos.png" alt="Drink Explorer" class="w-full h-full object-cover"></div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-bold mb-2 text-white">Drink Explorer</h3>
+              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Cocktail recipe search engine consuming a REST API + AI‑generated recipes via OpenRouter. Zustand, Zod, and React Router DOM for navigation.</p>
+              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Zod</span><span class="project-tech">React Router</span></div>
+              <a href="https://buscadorbebidas-ai.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        // Animación para las barras de habilidades
-        document.addEventListener('DOMContentLoaded', function() {
-            const skillBars = document.querySelectorAll('.skill-progress');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const width = entry.target.style.width;
-                        entry.target.style.width = '0';
-                        setTimeout(() => {
-                            entry.target.style.width = width;
-                        }, 300);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            skillBars.forEach(bar => {
-                observer.observe(bar);
-            });
-            
-            // Navegación suave
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 px-6 text-center scroll-mt-24">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="section-title mb-8">Let's work together</h2>
+        <div class="glass-panel p-8 md:p-10 rounded-3xl border border-white/10">
+          <p class="text-gray-200 text-lg mb-6">Have an exciting project or a frontend challenge? I'm currently available for collaborations, freelance, or full‑time opportunities.</p>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=andres.bleckwedel2@gmail.com&su=Contact&body=Hi%20Andres" class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold transition shadow-lg">✉️ Send a message</a>
+          <div class="mt-6 text-gray-400 text-sm">andres.bleckwedel2@gmail.com</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-black/60 backdrop-blur-md text-gray-400 py-8 text-center text-sm border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3">
+      <p>© 2026 Andres Bleckwedel — Frontend Developer</p>
+      <div class="flex gap-5"><a href="https://github.com/andresbleck?tab=repositories" class="hover:text-[#18A079] transition">GitHub</a><a href="https://www.linkedin.com/in/andres-bleckwedel" class="hover:text-[#18A079] transition">LinkedIn</a><a href="https://api.whatsapp.com/send?phone=543815699499" class="hover:text-[#18A079] transition">WhatsApp</a></div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // Menu toggle
+      const toggleBtn = document.getElementById('menuToggle');
+      const menuPanel = document.getElementById('mobileNav');
+      const menuLinks = document.querySelectorAll('.menu-link');
+      function closeMenu() { if (menuPanel) menuPanel.classList.remove('open'); }
+      function openMenu() { if (menuPanel) menuPanel.classList.add('open'); }
+      if (toggleBtn && menuPanel) {
+        toggleBtn.addEventListener('click', (e) => { e.stopPropagation(); menuPanel.classList.contains('open') ? closeMenu() : openMenu(); });
+        menuLinks.forEach(link => link.addEventListener('click', () => closeMenu()));
+        document.addEventListener('click', (event) => { if (!menuPanel.contains(event.target) && !toggleBtn.contains(event.target) && menuPanel.classList.contains('open')) closeMenu(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuPanel.classList.contains('open')) closeMenu(); });
+      }
+      
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === "#") return;
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) { e.preventDefault(); window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' }); }
         });
-        
-    </script>
-<script>
-// Efecto de escritura para el párrafo
-document.addEventListener('DOMContentLoaded', () => {
-    const textElement = document.getElementById('typewriter-text');
-    const cursorElement = document.getElementById('typewriter-cursor');
-    
-    if (textElement && cursorElement) {
-        const text = '"Empezando mi camino como desarrollador de software"';
-        let index = 0;
-        
-        function typeWriter() {
-            if (index < text.length) {
-                textElement.textContent += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 100);
-            } else {
-                // Una vez terminado, el cursor deja de parpadear
-                cursorElement.classList.remove('animate-pulse');
-                cursorElement.style.opacity = '0';
-            }
-        }
-        
-        // Iniciar el efecto después de un pequeño delay
-        setTimeout(typeWriter, 500);
-    }
-});
-</script>
-<button id="back-to-top" class="fixed bottom-8 right-8 bg-[#18A079] hover:bg-[#148266] text-white p-3 rounded-full shadow-lg transition duration-300 opacity-0 invisible">
-    <i class="fas fa-arrow-up"></i>
-</button>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const backToTopButton = document.getElementById('back-to-top');
-    
-    // Mostrar u ocultar el botón basado en el scroll
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopButton.classList.remove('opacity-0', 'invisible');
-            backToTopButton.classList.add('opacity-100', 'visible');
+      });
+
+      // Scroll to top button visibility + functionality
+      const scrollBtn = document.getElementById('scrollTopBtn');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollBtn.classList.add('visible');
         } else {
-            backToTopButton.classList.remove('opacity-100', 'visible');
-            backToTopButton.classList.add('opacity-0', 'invisible');
+          scrollBtn.classList.remove('visible');
         }
-    });
-    
-    // Scroll suave al hacer clic
-    backToTopButton.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Funcionalidad del menú hamburguesa
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-    
-    // Abrir/cerrar menú
-    mobileMenuButton.addEventListener('click', function() {
-        sidebar.classList.toggle('-translate-x-full');
-        overlay.classList.toggle('hidden');
-    });
-    
-    // Cerrar menú al hacer clic en el overlay
-    overlay.addEventListener('click', function() {
-        sidebar.classList.add('-translate-x-full');
-        overlay.classList.add('hidden');
-    });
-    
-    // Cerrar menú al hacer clic en un enlace (en móviles)
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (window.innerWidth < 768) {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        });
-    });
-    
-    // Cerrar menú al redimensionar la ventana a desktop
-    window.addEventListener('resize', function() {
-        if (window.innerWidth >= 768) {
-            sidebar.classList.remove('-translate-x-full');
-            overlay.classList.add('hidden');
-        } else {
-            sidebar.classList.add('-translate-x-full');
-        }
-    });
-});
-</script>
+      });
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
 </body>
 </html>
