@@ -4,67 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Andres Bleckwedel | Frontend Developer — Portfolio</title>
+  <meta name="description" content="Andres Bleckwedel — Frontend Developer specialized in React, TypeScript and Node.js. Open to full-time roles, freelance and collaborations.">
+  <meta property="og:title" content="Andres Bleckwedel | Frontend Developer">
+  <meta property="og:description" content="I craft modern, high-performance web applications with clean architecture and exceptional UX.">
+  <meta property="og:image" content="./portada.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="./portada.png" type="image/png">
 
   <!-- Tailwind + Fonts + FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+
   <style>
-    * {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
       background: radial-gradient(circle at 10% 20%, #030014, #010105, #000000);
       background-attachment: fixed;
     }
-    
-    /* Glass morphism & dark professional cards */
+
+    /* ── Scroll reveal ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Glass panels ──────────────────────────────────────── */
     .glass-panel {
       background: rgba(10, 14, 23, 0.65);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(48, 62, 77, 0.35);
       border-radius: 2rem;
     }
-    
+
+    /* ── Project cards ─────────────────────────────────────── */
     .card-pro {
       background: rgba(8, 12, 24, 0.85);
       backdrop-filter: blur(4px);
-      border-radius: 1.75rem;
+      border-radius: 1.25rem;
       transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
       border: 1px solid rgba(66, 84, 102, 0.25);
       box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.6);
+      position: relative;
     }
-    
+    .card-pro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(24, 160, 121, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
+      z-index: 1;
+    }
+    .card-pro:hover::before { opacity: 1; }
     .card-pro:hover {
-      transform: translateY(-6px);
-      border-color: rgba(24, 160, 121, 0.45);
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(24, 160, 121, 0.2);
-      background: rgba(12, 18, 30, 0.92);
+      transform: translateY(-8px);
+      border-color: rgba(24, 160, 121, 0.4);
+      box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.8),
+                  0 0 0 1px rgba(24, 160, 121, 0.15),
+                  0 0 40px rgba(24, 160, 121, 0.06);
+      background: rgba(12, 18, 30, 0.95);
     }
-    
-    /* Gradient text & highlights */
+
+    /* ── Gradient text ─────────────────────────────────────── */
     .gradient-accent {
       background: linear-gradient(120deg, #18A079, #2dd4bf);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
     }
-    
+
+    /* ── Buttons ───────────────────────────────────────────── */
     .btn-primary {
       background: linear-gradient(105deg, #18A079 0%, #0f8b6a 100%);
       transition: all 0.25s ease;
       box-shadow: 0 6px 14px rgba(24, 160, 121, 0.25);
     }
-    
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 22px -8px rgba(24, 160, 121, 0.45);
       background: linear-gradient(105deg, #1eb78c, #18A079);
     }
-    
-    /* Menu dropdown animation */
+
+    /* ── Mobile menu ───────────────────────────────────────── */
     .mobile-menu {
       transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       transform-origin: top;
@@ -73,15 +102,14 @@
       visibility: hidden;
       pointer-events: none;
     }
-    
     .mobile-menu.open {
       opacity: 1;
       transform: scaleY(1);
       visibility: visible;
       pointer-events: auto;
     }
-    
-    /* Tech badges */
+
+    /* ── Tech badges ───────────────────────────────────────── */
     .tech-badge {
       background: rgba(24, 160, 121, 0.12);
       border: 1px solid rgba(24, 160, 121, 0.3);
@@ -89,42 +117,35 @@
       transition: all 0.2s;
       text-align: center;
     }
-    
     .tech-badge:hover {
       background: rgba(24, 160, 121, 0.25);
       border-color: #18A079;
       transform: translateY(-2px);
     }
-    
-    /* Project tech chips */
+
+    /* ── Project tech chips ────────────────────────────────── */
     .project-tech {
-      background: rgba(24, 160, 121, 0.15);
-      border: 1px solid rgba(24, 160, 121, 0.25);
-      color: #18A079;
-      font-size: 0.7rem;
+      background: rgba(24, 160, 121, 0.1);
+      border: 1px solid rgba(24, 160, 121, 0.2);
+      color: #2dd4bf;
+      font-size: 0.68rem;
       font-weight: 500;
-      padding: 0.25rem 0.75rem;
+      padding: 0.2rem 0.65rem;
       border-radius: 9999px;
+      white-space: nowrap;
       transition: all 0.2s;
     }
-    
     .project-tech:hover {
-      background: rgba(24, 160, 121, 0.3);
+      background: rgba(24, 160, 121, 0.25);
       border-color: #18A079;
     }
-    
-    /* custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0a0a14;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #18A079;
-      border-radius: 10px;
-    }
-    
+
+    /* ── Scrollbar ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0a0a14; }
+    ::-webkit-scrollbar-thumb { background: #18A079; border-radius: 10px; }
+
+    /* ── Section titles ────────────────────────────────────── */
     .section-title {
       font-size: 2.25rem;
       font-weight: 800;
@@ -135,7 +156,7 @@
       color: transparent;
     }
 
-    /* Education timeline */
+    /* ── Education timeline ────────────────────────────────── */
     .edu-card {
       background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(4px);
@@ -152,34 +173,24 @@
       box-shadow: 0 0 0 3px rgba(24, 160, 121, 0.3);
     }
 
-    /* Scroll to top button */
+    /* ── Scroll to top ─────────────────────────────────────── */
     .scroll-top {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: 2rem; right: 2rem;
       background: #18A079;
       color: white;
-      width: 3rem;
-      height: 3rem;
+      width: 3rem; height: 3rem;
       border-radius: 9999px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       cursor: pointer;
       transition: all 0.2s;
-      opacity: 0;
-      visibility: hidden;
+      opacity: 0; visibility: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 40;
     }
-    .scroll-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .scroll-top:hover {
-      background: #0f8b6a;
-      transform: translateY(-4px);
-    }
+    .scroll-top.visible { opacity: 1; visibility: visible; }
+    .scroll-top:hover { background: #0f8b6a; transform: translateY(-4px); }
   </style>
 </head>
 <body class="text-white antialiased">
@@ -189,56 +200,68 @@
     <i class="fas fa-arrow-up text-xl"></i>
   </div>
 
-  <!-- ========== FIXED HEADER WITH HAMBURGER MENU ========== -->
+  <!-- ═══════════════ HEADER ═══════════════ -->
   <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 backdrop-blur-xl bg-black/40 border-b border-white/5 shadow-sm">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <a href="#" class="text-xl md:text-2xl font-bold tracking-tight hover:text-[#18A079] transition duration-300">
         <span class="gradient-accent">Andres</span> <span class="text-white">Bleckwedel</span>
       </a>
-      <button id="menuToggle" class="relative z-50 flex flex-col items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#18A079]/50 transition-all focus:outline-none">
-        <span class="block text-2xl leading-5">☰</span>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#about"     class="hover:text-[#18A079] transition duration-200">About</a>
+        <a href="#tech"      class="hover:text-[#18A079] transition duration-200">Tech Stack</a>
+        <a href="#education" class="hover:text-[#18A079] transition duration-200">Education</a>
+        <a href="#projects"  class="hover:text-[#18A079] transition duration-200">Projects</a>
+        <a href="#contact"   class="btn-primary px-5 py-2 rounded-lg font-semibold text-white">Contact</a>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false"
+              class="md:hidden relative z-50 flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#18A079]/50 transition-all focus:outline-none">
+        <span id="menuIcon" class="text-2xl leading-none select-none">☰</span>
       </button>
     </div>
-    
+
+    <!-- Mobile panel -->
     <div id="mobileNav" class="mobile-menu fixed top-[72px] left-4 right-4 md:left-auto md:right-6 md:w-80 rounded-2xl glass-panel shadow-2xl border border-white/10 p-5 z-40">
       <nav class="flex flex-col gap-3">
-        <a href="#" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Home</a>
-        <a href="#about" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">About</a>
-        <a href="#tech" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Tech Stack</a>
+        <a href="#"          class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Home</a>
+        <a href="#about"     class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">About</a>
+        <a href="#tech"      class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Tech Stack</a>
         <a href="#education" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Education</a>
-        <a href="#projects" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Projects</a>
-        <a href="#contact" class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Contact</a>
+        <a href="#projects"  class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Projects</a>
+        <a href="#contact"   class="menu-link text-lg font-medium px-4 py-2.5 rounded-xl hover:bg-white/10 transition flex items-center gap-3">Contact</a>
       </nav>
       <div class="mt-5 pt-3 border-t border-white/10 text-xs text-gray-400 text-center">Let's build something great</div>
     </div>
   </header>
 
   <main class="pt-20">
-    
-    <!-- HERO SECTION (con íconos de redes sociales) -->
+
+    <!-- ═══════════════ HERO ═══════════════ -->
     <section class="min-h-[90vh] flex items-center justify-center text-center px-6 relative overflow-hidden">
       <div class="max-w-4xl relative z-10">
         <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-[#18A079]/10 border border-[#18A079]/30 text-sm font-medium tracking-wide backdrop-blur-sm">✦ Portfolio 2026 ✦</div>
         <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">Andres <span class="gradient-accent">Bleckwedel</span></h1>
         <p class="text-2xl md:text-3xl font-semibold text-[#18A079] mb-6">Frontend Developer</p>
-        <p class="text-soft text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-gray-300">I craft modern, high-performance web applications with a focus on exceptional UX, clean architecture, and scalable frontend solutions.</p>
-        
-        <!-- Botones CTA -->
+        <p class="text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-gray-300">I craft modern, high-performance web applications with a focus on exceptional UX, clean architecture, and scalable frontend solutions.</p>
         <div class="flex flex-wrap justify-center gap-5 mt-10">
           <a href="#projects" class="btn-primary px-8 py-3.5 rounded-xl font-semibold transition shadow-lg">Explore Projects →</a>
-          <a href="#contact" class="border border-gray-500/60 px-8 py-3.5 rounded-xl font-semibold hover:border-[#18A079] hover:bg-white/5 transition backdrop-blur-sm">Let's Connect</a>
+          <a href="#contact"  class="border border-gray-500/60 px-8 py-3.5 rounded-xl font-semibold hover:border-[#18A079] hover:bg-white/5 transition backdrop-blur-sm">Let's Connect</a>
         </div>
-
-        <!-- Redes Sociales (íconos funcionando) -->
         <div class="mt-12 flex justify-center">
           <div class="flex space-x-6">
-            <a href="https://www.linkedin.com/in/andres-bleckwedel" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
+            <a href="https://www.linkedin.com/in/andres-bleckwedel" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+               class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
               <i class="fab fa-linkedin text-3xl"></i>
             </a>
-            <a href="https://github.com/andresbleck?tab=repositories" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
+            <a href="https://github.com/andresbleck?tab=repositories" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+               class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
               <i class="fab fa-github text-3xl"></i>
             </a>
-            <a href="https://wa.link/d6e0rx" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
+            <a href="https://wa.link/d6e0rx" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+               class="text-gray-400 hover:text-[#18A079] transition duration-300 transform hover:scale-110">
               <i class="fab fa-whatsapp text-3xl"></i>
             </a>
           </div>
@@ -247,22 +270,21 @@
       <div class="absolute w-96 h-96 bg-[#18A079]/20 rounded-full blur-[100px] -top-20 -right-20 opacity-30 pointer-events-none"></div>
     </section>
 
-    <!-- ABOUT SECTION -->
+    <!-- ═══════════════ ABOUT ═══════════════ -->
     <section id="about" class="py-24 px-6 text-center scroll-mt-24">
       <div class="max-w-4xl mx-auto">
-        <h2 class="section-title mb-8">About Me</h2>
-        <div class="glass-panel p-8 md:p-10 rounded-3xl">
+        <h2 class="section-title mb-8 reveal">About Me</h2>
+        <div class="glass-panel p-8 md:p-10 rounded-3xl reveal" style="transition-delay:0.15s">
           <p class="text-gray-200 text-lg leading-relaxed">I'm a Frontend Developer with a robust background in Software Development and Quality Assurance. I specialize in building modern, high-performance web applications using <strong class="text-[#18A079]">React</strong> and <strong class="text-[#18A079]">TypeScript</strong>, with an obsession for clean code, scalability, and intuitive user experiences. My QA mindset ensures pixel-perfect, bug-free interfaces that users love.</p>
         </div>
       </div>
     </section>
 
-    <!-- TECH STACK SECTION -->
+    <!-- ═══════════════ TECH STACK ═══════════════ -->
     <section id="tech" class="py-24 px-6 text-center scroll-mt-24 bg-black/20 backdrop-blur-sm">
       <div class="max-w-5xl mx-auto">
-        <h2 class="section-title mb-12">Tech Stack & Tools</h2>
-        <!-- Grid: 2 columnas en móvil, 3 en tablet, 4 en desktop -> aspecto vertical/alargado -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+        <h2 class="section-title mb-12 reveal">Tech Stack & Tools</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center reveal" style="transition-delay:0.15s">
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">React 18</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">TypeScript</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">JavaScript (ES2022+)</span>
@@ -272,24 +294,24 @@
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Git & GitHub</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Context API / Redux</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">RESTful APIs</span>
-          <!-- Agregamos algunos badges extra para dar más altura y variedad (opcional pero profesional) -->
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Zustand</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Jira</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Scrum</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Postman</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Cursor</span>
           <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Cypress</span>
-          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Mocha&Chai</span>
+          <span class="tech-badge w-full px-4 py-2.5 rounded-full font-medium text-white">Mocha & Chai</span>
         </div>
+      </div>
     </section>
 
-    <!-- EDUCATION SECTION -->
+    <!-- ═══════════════ EDUCATION ═══════════════ -->
     <section id="education" class="py-24 px-6 scroll-mt-24">
       <div class="max-w-4xl mx-auto">
-        <h2 class="section-title text-center mb-12">Education</h2>
+        <h2 class="section-title text-center mb-12 reveal">Education</h2>
         <div class="relative">
           <div class="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-[#18A079]/40 hidden sm:block"></div>
-          <div class="relative pl-6 sm:pl-16 pb-12">
+          <div class="relative pl-6 sm:pl-16 pb-12 reveal" style="transition-delay:0.1s">
             <div class="absolute left-0 top-1 w-3 h-3 rounded-full edu-dot hidden sm:block"></div>
             <div class="edu-card rounded-2xl p-6 shadow-lg">
               <h3 class="text-xl font-bold text-white mb-1">Software Development & Quality Technician</h3>
@@ -298,7 +320,7 @@
               <p class="text-gray-300 leading-relaxed">Specialized technical training in backend and frontend development, quality assurance, software architecture, agile methodologies, and programming best practices.</p>
             </div>
           </div>
-          <div class="relative pl-6 sm:pl-16 pb-6">
+          <div class="relative pl-6 sm:pl-16 pb-6 reveal" style="transition-delay:0.2s">
             <div class="absolute left-0 top-1 w-3 h-3 rounded-full edu-dot hidden sm:block"></div>
             <div class="edu-card rounded-2xl p-6 shadow-lg">
               <h3 class="text-xl font-bold text-white mb-1">React & TypeScript Mastery</h3>
@@ -311,132 +333,162 @@
       </div>
     </section>
 
-    <!-- PROJECTS SECTION — 9 proyectos en inglés -->
+    <!-- ═══════════════ PROJECTS ═══════════════ -->
     <section id="projects" class="py-24 px-6 scroll-mt-24 bg-black/20">
       <div class="max-w-7xl mx-auto">
-        <h2 class="section-title text-center mb-14">Featured Projects</h2>
+        <h2 class="section-title text-center mb-14 reveal">Featured Projects</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!--
-           1. BookLoop 
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/bookloop.png" alt="BookLoop" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">BookLoop</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Final thesis project: a marketplace for buying and selling used books. I led the UI/UX design and interactions, creating a friendly, library‑inspired interface with smooth navigation.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">HTML</span><span class="project-tech">CSS</span><span class="project-tech">JavaScript</span><span class="project-tech">React</span><span class="project-tech">Express</span><span class="project-tech">Node</span><span class="project-tech">Supabase</span><span class="project-tech">Cypress</span><span class="project-tech">Vercel</span></div>
-              <a href="https://www.bookloop.com.ar/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>-->
-          
-          
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/KM0.png" alt="Guitar Shop" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Garage Manager</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Is a full-stack web app for families to track vehicles, manage expirations, log repairs, and get automatic alerts with secure shared authentication.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">React</span><span class="project-tech">Tailwindcss</span><span class="project-tech">Node.js</span><span class="project-tech"> Express</span><span class="project-tech"> SQLite</span><span class="project-tech"> JWT</span></div>
-              <a href="https://garage-manager-five.vercel.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>
-          
-          <!-- 3. Tip Calculator 
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/calculadora.png" alt="Tip Calculator" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Tip Calculator</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Restaurant‑friendly app to generate orders and calculate tips. Used TypeScript generics for type inference and improved React performance.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Netlify</span></div>
-              <a href="https://ordesnesypropinas.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>-->
-          
-          <!-- 4. Calorie Tracker 
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/contador.png" alt="Calorie Tracker" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Calorie Tracker</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Track calories consumed and burned. Implemented `useReducer` for scalable global state management instead of multiple `useState` calls.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Netlify</span></div>
-              <a href="https://conttadorcalorias.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>-->
-          
-          <!-- 5. Expense Control -->
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/gastos.png" alt="Expense Control" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Expense Control</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Budget manager with Context API, swipeable list for deleting/editing expenses, and a circular progress bar to visualize spending.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Context API</span><span class="project-tech">Netlify</span></div>
-              <a href="https://gastos-context-api.vercel.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>
-          
-          <!-- 6. Patient Tracker -->
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/pacientes.png" alt="Patient Tracker" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Patient Tracker</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Veterinary clinic management app using Zustand for state, React Hook Form for validation, Redux DevTools, and Toastify for dynamic alerts.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Zustand</span><span class="project-tech">React Hook Form</span><span class="project-tech">Netlify</span></div>
-              <a href="https://pacientes-zustand-toastify.vercel.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>
-          
-          <!-- 7. Weather App 
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/clima.png" alt="Weather App" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Weather App</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Real‑time weather data from external API. Built with TypeScript, Zod for validation, and CSS Modules for scoped styling.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">CSS Modules</span><span class="project-tech">Zod</span></div>
-              <a href="https://clima-ts-api-zod.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>-->
-          
-          <!-- 8. Crypto Tracker -->
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/cripto.png" alt="Crypto Tracker" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Crypto Tracker</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Cryptocurrency price tracker using a REST API. TypeScript, Zod for safe data parsing, Zustand for state, and CSS Modules.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">CSS Modules</span><span class="project-tech">Zod</span></div>
-              <a href="https://cripto-ts-api.vercel.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>
-          
-          <!-- 9. Drink Explorer 
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/tragos.png" alt="Drink Explorer" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Drink Explorer</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Cocktail recipe search engine consuming a REST API + AI‑generated recipes via OpenRouter. Zustand, Zod, and React Router DOM for navigation.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">Tailwind CSS</span><span class="project-tech">Zod</span><span class="project-tech">React Router</span></div>
-              <a href="https://buscadorbebidas-ai.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
-            </div>
-          </div>-->
 
-          <!-- 9. Notes Dashboard 
-          <div class="card-pro overflow-hidden flex flex-col h-full">
-            <div class="h-48 overflow-hidden bg-gray-900"><img src="./images/tragos.png" alt="Drink Explorer" class="w-full h-full object-cover"></div>
-            <div class="p-6 flex-1 flex flex-col">
-              <h3 class="text-xl font-bold mb-2 text-white">Notes Dashboard</h3>
-              <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">Full-stack notes app built with React, Tailwind CSS, Node.js, Express, Sequelize and SQLite, featuring note creation, editing, archiving, and category-based filtering.</p>
-              <div class="flex flex-wrap gap-2 mb-5"><span class="project-tech">React</span><span class="project-tech">Node</span><span class="project-tech">Express</span><span class="project-tech">Tailwindcss</span><span class="project-tech">SQLite</span><span class="project-tech">Lite</span><span class="project-tech">Sequalize</span></div>
-              <a href="https://buscadorbebidas-ai.netlify.app/" target="_blank" rel="noopener noreferrer" class="flex justify-center items-center gap-1 text-[#18A079] font-medium hover:underline transition">View Project →</a>
+          <!-- 1. Daily Dash -->
+          <div class="card-pro overflow-hidden flex flex-col h-full group reveal" style="transition-delay:0.05s">
+            <div class="relative h-52 overflow-hidden bg-gray-900/80">
+              <img src="./images/notes.png" alt="Daily Dash — full-stack notes manager app" loading="lazy"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 pointer-events-none">
+                <a href="https://notesapp-drab-one.vercel.app/" target="_blank" rel="noopener noreferrer"
+                   class="pointer-events-auto translate-y-3 group-hover:translate-y-0 transition-transform duration-300 bg-[#18A079] hover:bg-[#1eb78c] text-white px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                  View Project <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+              <div class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-bold text-[#2dd4bf]">01</div>
+              <div class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-[#18A079]/20 border border-[#18A079]/30 text-xs font-medium text-[#18A079]">Full Stack</div>
             </div>
-          </div>-->
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-lg font-bold mb-2 text-white">Daily Dash</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">Full-stack notes app with create, edit, delete and archive support. Category organization and active/archived filter. Built with PostgreSQL, deployed on Vercel.</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="project-tech">React</span><span class="project-tech">Tailwind</span><span class="project-tech">Node.js</span><span class="project-tech">Express</span><span class="project-tech">PostgreSQL</span><span class="project-tech">Vercel</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Garage Manager -->
+          <div class="card-pro overflow-hidden flex flex-col h-full group reveal" style="transition-delay:0.15s">
+            <div class="relative h-52 overflow-hidden bg-gray-900/80">
+              <img src="./images/KM0.png" alt="Garage Manager — vehicle tracking and maintenance app" loading="lazy"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 pointer-events-none">
+                <a href="https://garage-manager-five.vercel.app/" target="_blank" rel="noopener noreferrer"
+                   class="pointer-events-auto translate-y-3 group-hover:translate-y-0 transition-transform duration-300 bg-[#18A079] hover:bg-[#1eb78c] text-white px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                  View Project <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+              <div class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-bold text-[#2dd4bf]">02</div>
+              <div class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-[#18A079]/20 border border-[#18A079]/30 text-xs font-medium text-[#18A079]">Full Stack</div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-lg font-bold mb-2 text-white">Garage Manager</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">Family vehicle tracker with expiration alerts, repair logs, and secure shared authentication via JWT. SQLite persistence, full-stack on Vercel.</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="project-tech">React</span><span class="project-tech">Tailwind</span><span class="project-tech">Node.js</span><span class="project-tech">Express</span><span class="project-tech">SQLite</span><span class="project-tech">JWT</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Expense Control -->
+          <div class="card-pro overflow-hidden flex flex-col h-full group reveal" style="transition-delay:0.25s">
+            <div class="relative h-52 overflow-hidden bg-gray-900/80">
+              <img src="./images/gastos.png" alt="Expense Control — budget manager with Context API" loading="lazy"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 pointer-events-none">
+                <a href="https://gastos-context-api.vercel.app/" target="_blank" rel="noopener noreferrer"
+                   class="pointer-events-auto translate-y-3 group-hover:translate-y-0 transition-transform duration-300 bg-[#18A079] hover:bg-[#1eb78c] text-white px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                  View Project <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+              <div class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-bold text-[#2dd4bf]">03</div>
+              <div class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-purple-500/20 border border-purple-500/30 text-xs font-medium text-purple-300">Frontend</div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-lg font-bold mb-2 text-white">Expense Control</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">Budget manager with Context API, swipeable list for edit/delete expenses, and a circular progress bar to visualize spending against your set budget.</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Tailwind</span><span class="project-tech">Context API</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Patient Tracker -->
+          <div class="card-pro overflow-hidden flex flex-col h-full group reveal" style="transition-delay:0.05s">
+            <div class="relative h-52 overflow-hidden bg-gray-900/80">
+              <img src="./images/pacientes.png" alt="Patient Tracker — veterinary clinic management app" loading="lazy"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 pointer-events-none">
+                <a href="https://pacientes-zustand-toastify.vercel.app/" target="_blank" rel="noopener noreferrer"
+                   class="pointer-events-auto translate-y-3 group-hover:translate-y-0 transition-transform duration-300 bg-[#18A079] hover:bg-[#1eb78c] text-white px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                  View Project <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+              <div class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-bold text-[#2dd4bf]">04</div>
+              <div class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-purple-500/20 border border-purple-500/30 text-xs font-medium text-purple-300">Frontend</div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-lg font-bold mb-2 text-white">Patient Tracker</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">Veterinary clinic app with Zustand for global state, React Hook Form for validation, and Toastify for real-time feedback alerts.</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">React Hook Form</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Crypto Tracker -->
+          <div class="card-pro overflow-hidden flex flex-col h-full group reveal" style="transition-delay:0.15s">
+            <div class="relative h-52 overflow-hidden bg-gray-900/80">
+              <img src="./images/cripto.png" alt="Crypto Tracker — real-time cryptocurrency price tracker" loading="lazy"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 pointer-events-none">
+                <a href="https://cripto-ts-api.vercel.app/" target="_blank" rel="noopener noreferrer"
+                   class="pointer-events-auto translate-y-3 group-hover:translate-y-0 transition-transform duration-300 bg-[#18A079] hover:bg-[#1eb78c] text-white px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                  View Project <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+              <div class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-bold text-[#2dd4bf]">05</div>
+              <div class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-yellow-500/20 border border-yellow-500/30 text-xs font-medium text-yellow-300">API</div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-lg font-bold mb-2 text-white">Crypto Tracker</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">Real-time cryptocurrency price tracker via REST API. Zod for safe data parsing, Zustand for state, and CSS Modules for scoped styling.</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">Zod</span><span class="project-tech">CSS Modules</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Drink Explorer -->
+          <div class="card-pro overflow-hidden flex flex-col h-full group reveal" style="transition-delay:0.25s">
+            <div class="relative h-52 overflow-hidden bg-gray-900/80">
+              <img src="./images/tragos.png" alt="Drink Explorer — cocktail search engine with AI-generated recipes" loading="lazy"
+                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5 pointer-events-none">
+                <a href="https://buscadorbebidas-ai.netlify.app/" target="_blank" rel="noopener noreferrer"
+                   class="pointer-events-auto translate-y-3 group-hover:translate-y-0 transition-transform duration-300 bg-[#18A079] hover:bg-[#1eb78c] text-white px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                  View Project <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+              </div>
+              <div class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-bold text-[#2dd4bf]">06</div>
+              <div class="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-blue-500/20 border border-blue-500/30 text-xs font-medium text-blue-300">AI + API</div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-lg font-bold mb-2 text-white">Drink Explorer</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">Cocktail recipe search engine consuming a REST API + AI-generated recipes via OpenRouter. Zustand, Zod, and React Router DOM for navigation.</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="project-tech">TypeScript</span><span class="project-tech">React</span><span class="project-tech">Zustand</span><span class="project-tech">Zod</span><span class="project-tech">React Router</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- ═══════════════ CONTACT ═══════════════ -->
     <section id="contact" class="py-24 px-6 text-center scroll-mt-24">
       <div class="max-w-3xl mx-auto">
-        <h2 class="section-title mb-8">Let's work together</h2>
-        <div class="glass-panel p-8 md:p-10 rounded-3xl border border-white/10">
-          <p class="text-gray-200 text-lg mb-6">Have an exciting project or a frontend challenge? I'm currently available for collaborations, freelance, or full‑time opportunities.</p>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=andres.bleckwedel2@gmail.com&su=Contact&body=Hi%20Andres" class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold transition shadow-lg">✉️ Send a message</a>
+        <h2 class="section-title mb-8 reveal">Let's work together</h2>
+        <div class="glass-panel p-8 md:p-10 rounded-3xl border border-white/10 reveal" style="transition-delay:0.15s">
+          <p class="text-gray-200 text-lg mb-6">Have an exciting project or a frontend challenge? I'm currently available for collaborations, freelance, or full-time opportunities.</p>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=andres.bleckwedel2@gmail.com&su=Contact&body=Hi%20Andres"
+             class="btn-primary inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold transition shadow-lg">✉️ Send a message</a>
           <div class="mt-6 text-gray-400 text-sm">andres.bleckwedel2@gmail.com</div>
         </div>
       </div>
@@ -446,47 +498,70 @@
   <footer class="bg-black/60 backdrop-blur-md text-gray-400 py-8 text-center text-sm border-t border-white/5">
     <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3">
       <p>© 2026 Andres Bleckwedel — Frontend Developer</p>
-      <div class="flex gap-5"><a href="https://github.com/andresbleck?tab=repositories" class="hover:text-[#18A079] transition">GitHub</a><a href="https://www.linkedin.com/in/andres-bleckwedel" class="hover:text-[#18A079] transition">LinkedIn</a><a href="https://api.whatsapp.com/send?phone=543815699499" class="hover:text-[#18A079] transition">WhatsApp</a></div>
+      <div class="flex gap-5">
+        <a href="https://github.com/andresbleck?tab=repositories" class="hover:text-[#18A079] transition">GitHub</a>
+        <a href="https://www.linkedin.com/in/andres-bleckwedel"   class="hover:text-[#18A079] transition">LinkedIn</a>
+        <a href="https://api.whatsapp.com/send?phone=543815699499" class="hover:text-[#18A079] transition">WhatsApp</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    (function() {
-      // Menu toggle
+    (function () {
+      // ── Menu toggle ──────────────────────────────────────────
       const toggleBtn = document.getElementById('menuToggle');
       const menuPanel = document.getElementById('mobileNav');
+      const menuIcon  = document.getElementById('menuIcon');
       const menuLinks = document.querySelectorAll('.menu-link');
-      function closeMenu() { if (menuPanel) menuPanel.classList.remove('open'); }
-      function openMenu() { if (menuPanel) menuPanel.classList.add('open'); }
-      if (toggleBtn && menuPanel) {
-        toggleBtn.addEventListener('click', (e) => { e.stopPropagation(); menuPanel.classList.contains('open') ? closeMenu() : openMenu(); });
-        menuLinks.forEach(link => link.addEventListener('click', () => closeMenu()));
-        document.addEventListener('click', (event) => { if (!menuPanel.contains(event.target) && !toggleBtn.contains(event.target) && menuPanel.classList.contains('open')) closeMenu(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuPanel.classList.contains('open')) closeMenu(); });
+
+      function closeMenu() {
+        menuPanel.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        menuIcon.textContent = '☰';
       }
-      
-      // Smooth scroll for anchor links
+      function openMenu() {
+        menuPanel.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        menuIcon.textContent = '✕';
+      }
+      if (toggleBtn && menuPanel) {
+        toggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menuPanel.classList.contains('open') ? closeMenu() : openMenu();
+        });
+        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+        document.addEventListener('click', (e) => {
+          if (!menuPanel.contains(e.target) && !toggleBtn.contains(e.target) && menuPanel.classList.contains('open'))
+            closeMenu();
+        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+      }
+
+      // ── Smooth scroll ────────────────────────────────────────
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          const targetId = this.getAttribute('href');
-          if (targetId === "#") return;
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) { e.preventDefault(); window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' }); }
+        anchor.addEventListener('click', function (e) {
+          const id = this.getAttribute('href');
+          if (id === '#') return;
+          const target = document.querySelector(id);
+          if (target) { e.preventDefault(); window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); }
         });
       });
 
-      // Scroll to top button visibility + functionality
+      // ── Scroll to top ────────────────────────────────────────
       const scrollBtn = document.getElementById('scrollTopBtn');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-          scrollBtn.classList.add('visible');
-        } else {
-          scrollBtn.classList.remove('visible');
-        }
-      });
-      scrollBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+      window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', window.scrollY > 500));
+      scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // ── Scroll reveal ────────────────────────────────────────
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     })();
   </script>
 </body>
